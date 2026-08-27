@@ -57,6 +57,7 @@ Sentinel MA directly addresses these three failure modes:
 
 ## Table of Contents
 
+- [Video Demo](#video-demo)
 - [What This Project Does](#what-this-project-does)
 - [Features](#features)
 - [Tools and Frameworks](#tools-and-frameworks)
@@ -74,6 +75,10 @@ Sentinel MA directly addresses these three failure modes:
 - [Limitations](#limitations)
 
 ---
+## Video Demo
+https://github.com/user-attachments/assets/0cfb5695-2c6f-431b-94cd-0a9f513a261c
+
+
 
 ## What This Project Does
 
