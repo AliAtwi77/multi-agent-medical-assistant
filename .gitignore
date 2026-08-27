@@ -1,0 +1,98 @@
+# ==============================================================================
+# Environment / secrets — never commit real API keys
+# ==============================================================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ==============================================================================
+# Python (backend)
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Type checkers / linters
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# ==============================================================================
+# Runtime data — generated at runtime, never committed
+# ==============================================================================
+data/*.db
+data/*.db-journal
+data/*.log
+data/uploads/*
+!data/uploads/.gitkeep
+data/vector_store/*
+!data/vector_store/.gitkeep
+
+# HuggingFace / model caches, if ever created locally inside the repo
+.cache/
+*.safetensors
+*.bin
+
+# ==============================================================================
+# Frontend
+# ==============================================================================
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# ==============================================================================
+# Jupyter / Colab notebook checkpoints
+# ==============================================================================
+.ipynb_checkpoints/
+
+# ==============================================================================
+# OS files
+# ==============================================================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==============================================================================
+# IDE / editor
+# ==============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
