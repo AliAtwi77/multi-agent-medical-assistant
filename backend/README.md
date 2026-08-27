@@ -410,6 +410,7 @@ servable `/media/...` URL the frontend actually needs to display it.
 ---
 
 ## How a Request Actually Flows
+<img width="2720" height="2440" alt="sentinel_ma_technical_workflow" src="https://github.com/user-attachments/assets/f6157cf6-e26d-41e2-ba0c-352e35c47db1" />
 
 Tying the above together, a text question sent to `POST /api/chat`:
 
