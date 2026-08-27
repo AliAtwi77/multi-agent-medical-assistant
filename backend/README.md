@@ -11,6 +11,7 @@ data, the Colab notebook, root-level setup), see the
 
 ## Table of Contents
 
+- [How a Request Actually Flows](#how-a-request-actually-flows)
 - [Directory Structure](#directory-structure)
 - [`main.py`](#mainpy)
 - [`agentic_systems/`](#agentic_systems)
@@ -22,7 +23,32 @@ data, the Colab notebook, root-level setup), see the
 - [`web_search/`](#web_search)
 - [`voice/`](#voice)
 - [`utils/`](#utils)
-- [How a Request Actually Flows](#how-a-request-actually-flows)
+
+
+---
+
+## How a Request Actually Flows
+<img width="2720" height="2440" alt="sentinel_ma_technical_workflow" src="https://github.com/user-attachments/assets/f6157cf6-e26d-41e2-ba0c-352e35c47db1" />
+
+Tying the above together, a text question sent to `POST /api/chat`:
+
+1. `api/routers/chat_router.py` resolves/creates the conversation via
+   `utils/conversation_helper.py`, saves the user's message, and calls
+   `agentic_systems/orchestrator.py`'s `run_workflow(...)`.
+2. The graph runs: `guardrail/input_guardrail.py` screens the query →
+   `agentic_systems/agents/router_agent.py` classifies it → the chosen agent
+   (`rag_agent.py`, `web_search_agent.py`, or the orchestrator's own
+   general-chat node) produces a draft answer, pulling from `rag/` and
+   `web_search/` as needed → `guardrail/output_guardrail.py` reviews the
+   draft.
+3. `chat_router.py` persists the assistant's message (via
+   `api/models/db_models.py`) and returns it, shaped by
+   `api/models/schemas.py`.
+
+An uploaded image follows the same shape through `imaging_router.py`, except
+routing is deterministic straight to `imaging_analysis_agent.py` →
+`imaging/medgemma_client.py`, and the result is *always* flagged for human
+review regardless of confidence.
 
 ---
 
@@ -408,26 +434,3 @@ conversation by ID, and converting an on-disk image filepath into the
 servable `/media/...` URL the frontend actually needs to display it.
 
 ---
-
-## How a Request Actually Flows
-<img width="2720" height="2440" alt="sentinel_ma_technical_workflow" src="https://github.com/user-attachments/assets/f6157cf6-e26d-41e2-ba0c-352e35c47db1" />
-
-Tying the above together, a text question sent to `POST /api/chat`:
-
-1. `api/routers/chat_router.py` resolves/creates the conversation via
-   `utils/conversation_helper.py`, saves the user's message, and calls
-   `agentic_systems/orchestrator.py`'s `run_workflow(...)`.
-2. The graph runs: `guardrail/input_guardrail.py` screens the query →
-   `agentic_systems/agents/router_agent.py` classifies it → the chosen agent
-   (`rag_agent.py`, `web_search_agent.py`, or the orchestrator's own
-   general-chat node) produces a draft answer, pulling from `rag/` and
-   `web_search/` as needed → `guardrail/output_guardrail.py` reviews the
-   draft.
-3. `chat_router.py` persists the assistant's message (via
-   `api/models/db_models.py`) and returns it, shaped by
-   `api/models/schemas.py`.
-
-An uploaded image follows the same shape through `imaging_router.py`, except
-routing is deterministic straight to `imaging_analysis_agent.py` →
-`imaging/medgemma_client.py`, and the result is *always* flagged for human
-review regardless of confidence.
